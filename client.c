@@ -54,7 +54,7 @@ int main(void) {
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     // check if socket created
     if(sockfd == -1) {
-        printf("socket creation failure");
+        printf("socket creation failure\n");
         exit(0);
     }
 
@@ -71,7 +71,7 @@ int main(void) {
 
     //connect the client socket to the server socket
     if (connect(sockfd, (SA*)&servaddr, sizeof(servaddr)) != 0) {
-        printf("connection failed");
+        printf("connection failed\n");
         exit(0);
     }
 

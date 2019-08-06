@@ -1,4 +1,6 @@
 import socket
+import subprocess
+
 
 # variables
 port = 12345
@@ -16,8 +18,13 @@ while True:
         if not data:
             break
         from_client += data
-        print from_client
-        conn.send("Successful call to server\n")
+        
+        # take from_client and pass into subprocess to execute a command
+        # and return that output
+        output = subprocess.Popen(['ls'], stdout=subprocess.PIPE)
+        out, err = output.communicate()
+        print(from_client)
+        conn.send(out)
         
     conn.close()
     print 'client disconnected'
