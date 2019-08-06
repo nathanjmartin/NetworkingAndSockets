@@ -17,7 +17,7 @@ while True:
             break
         from_client += data
         print from_client
-        conn.send("Response from server\n")
+        conn.send("Successful call to server\n")
         
     conn.close()
     print 'client disconnected'

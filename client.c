@@ -9,6 +9,42 @@
 #define PORT 12345
 #define SA struct sockaddr
 
+void sendinfo(int sockfd) 
+{ 
+    //vars
+    char buff[MAX];
+    int n;
+
+    //constantly listen 
+    while(1) { 
+        //erasing all buffer data (when exists)
+        bzero(buff, sizeof(buff)); 
+        //printing prompt
+        printf("Send a command to the server: "); 
+        //index
+        n = 0; 
+        while ((buff[n++] = getchar()) != '\n') 
+            ; // wait for user input 
+        //send to server
+        write(sockfd, buff, sizeof(buff)); 
+        
+        //clear buffer
+        bzero(buff, sizeof(buff));
+
+        //read from server into buffer 
+        read(sockfd, buff, sizeof(buff));
+
+        //message from server 
+        printf("From Server : %s", buff);
+
+        //if interrupted, print client exit 
+        if ((strncmp(buff, "exit", 4)) == 0) { 
+            printf("Client canceled\n"); 
+            break; 
+        } 
+    } 
+}
+
 int main(void) {
     int sockfd, connfd;
     char *hello = "Hello, I am the client";
@@ -44,7 +80,9 @@ int main(void) {
         printf("connected to python server\n");
     }
 
-    send(sockfd, hello, strlen(hello), 0);
+    //send(sockfd, hello, strlen(hello), 0);
+    sendinfo(sockfd);
+
     close(sockfd);
     
 }
