@@ -1,12 +1,12 @@
 import socket
 import subprocess
-
+import os
 
 # variables
 port = 12345
 socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-socket.bind(('', port))
+socket.bind(('127.0.0.1', port))
 socket.listen(5)
 
 while True:
@@ -21,10 +21,12 @@ while True:
         
         # take from_client and pass into subprocess to execute a command
         # and return that output
-        output = subprocess.Popen(['ls'], stdout=subprocess.PIPE)
-        out, err = output.communicate()
+        # how can i replace 'ls' with 'from_client' without getting null characters error
+        output = os.popen(from_client).read()
         print(from_client)
-        conn.send(out)
+        conn.send(output)
+        output = 'Success!'
+        from_client = ''
         
     conn.close()
     print 'client disconnected'

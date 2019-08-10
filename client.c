@@ -26,7 +26,7 @@ void sendinfo(int sockfd)
         while ((buff[n++] = getchar()) != '\n') 
             ; // wait for user input 
         //send to server
-        write(sockfd, buff, sizeof(buff)); 
+        write(sockfd, buff, strlen(buff)); 
         
         //clear buffer
         bzero(buff, sizeof(buff));
@@ -34,8 +34,8 @@ void sendinfo(int sockfd)
         //read from server into buffer 
         read(sockfd, buff, sizeof(buff));
 
-        //message from server 
-        printf("From Server : %s", buff);
+        //message from server
+        printf("From Server : %s\n", buff);
 
         //if interrupted, print client exit 
         if ((strncmp(buff, "exit", 4)) == 0) { 
