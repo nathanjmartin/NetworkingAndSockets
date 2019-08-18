@@ -24,8 +24,10 @@ while True:
         # how can i replace 'ls' with 'from_client' without getting null characters error
         output = os.popen(from_client).read()
         print(from_client)
+        if 'touch' in from_client:
+            output = 'Success!'
         conn.send(output)
-        output = 'Success!'
+        #output = 'Success!'
         from_client = ''
         
     conn.close()
